@@ -1,0 +1,11 @@
+/**
+ * Sets the FPS - See https://www.youtube.com/watch?v=Hze87w_WMIg&list=PL1H1sBF1VAKXMz8kETLHRo1LwnvB08Q2J&index=6
+ * @remarks - I #defined FPS as 60 in my example
+ */
+void CapFrameRate(Uint32 starting_tick)
+{
+    if ((1000 / FPS) > SDL_GetTicks() - starting_tick)
+    {
+        SDL_Delay(1000 / FPS - (SDL_GetTicks() - starting_tick));
+    }
+}

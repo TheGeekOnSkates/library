@@ -1,0 +1,22 @@
+#include <Windows.h>
+
+/**
+ * Writes messages to the Windows Event Log
+ * @param sAppName - The name of the program that logged the event
+ * @param wType - One of the event types defined in windows.h (EVENTLOG_ERROR_TYPE, EVENTLOG_INFORMATION_TYPE etc.)
+ * @param msg - The message to pass along with the events
+ * @return int - 0 on success, -1 if RegisterEventSource returned NULL, and GetLastError() if something else went wrong.
+ * @remarks - This is about as simple as it gets, but you can get a lot fancier.  If you want to dive deeper, look
+ * into the MSDN articles on event IDs, event message files, etc.  But since I don't need to do all that for personal
+ * projects, I'm not going there just yet.  This function should work from either C++ or C (include windows.h).
+ */
+DWORD LogEvent(const char *sAppName, WORD wType, const char *msg)
+{
+	HANDLE h = RegisterEventSource(NULL, sAppName);
+	if (h == NULL)
+		return -1;
+	
+	BOOL reported = ReportEvent(h, wType, 0, 1, NULL, 1, 0, &LPCTSTR(msg), NULL);
+	BOOL done = DeregisterEventSource(h);
+	return reported == 0 || done == 0 ? GetLastError() : 0;
+}

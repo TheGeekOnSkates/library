@@ -1,0 +1,22 @@
+#include <iostream>
+
+/**
+* Checks if a file exists
+* @param[in] name - The file name
+* @return - True if it exists, false if it doesn't
+*/
+bool file_exists(const char * name)
+{
+	FILE *stream;
+	errno_t err;
+	err = fopen_s(&stream, name, "r");
+	if (err == 0)
+	{
+		fclose(stream);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}

@@ -1,0 +1,33 @@
+#include <windows.h>
+#include <vector>
+#include <string>
+
+/**
+ * Gets a list of files in a folder (except the ones that begin with a dot)
+ * @param[out] out - The vector to store the file names in
+ * @param[in] directory - The folder to get the files in
+ */
+void GetFilesInDirectory(std::vector<std::string> &out, const std::string &directory)
+{
+	HANDLE dir;
+	WIN32_FIND_DATA file_data;
+
+	if ((dir = FindFirstFile((directory + "/*").c_str(), &file_data)) == INVALID_HANDLE_VALUE)
+		return; /* No files found */
+
+	do {
+		const std::string file_name = file_data.cFileName;
+		const std::string full_file_name = directory + "/" + file_name;
+		const bool is_directory = (file_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0;
+
+		if (file_name[0] == '.')
+			continue;
+
+		if (is_directory)
+			continue;
+
+		out.push_back(full_file_name);
+	} while (FindNextFile(dir, &file_data));
+
+	FindClose(dir);
+}

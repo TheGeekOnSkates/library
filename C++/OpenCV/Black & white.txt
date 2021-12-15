@@ -1,0 +1,10 @@
+// This turns a grayscale image to black-&-white
+// Higher numbers = more black, probably 0 to 255.
+// The variable "image" here refers to another cv::Mat.
+// This worked great with the CTRL+1 dialog in Excel
+
+cv::Mat blackNwhite = image > 200;
+
+// You can also do:
+
+image = image > 200;

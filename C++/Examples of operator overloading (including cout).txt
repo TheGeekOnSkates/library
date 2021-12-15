@@ -1,0 +1,45 @@
+#include <iostream>
+
+using namespace std;
+
+class Geek
+{
+public:
+    string s;
+    Geek();
+    Geek(string txt)
+    {
+        s = txt;
+    }
+    const Geek &operator=(const Geek &other)
+    {
+        s = other.s;
+        return *this;
+    }
+    const bool operator==(const Geek &other)
+    {
+        return (s == other.s);
+    }
+    const bool operator!=(const Geek &other)
+    {
+        return (s != other.s);
+    }
+    
+    friend ostream & operator<<(ostream & out, const Geek & instance)
+    {
+        out << instance.s << " is a total GEEK!!!";
+        return out;
+    }
+};
+
+int main()
+{
+    Geek Mikey("Mikey");
+    Geek Miguelito("Miguelito");
+    if (Mikey != Miguelito)
+        cout << "Miguelito and Mikey are spelled differently." << endl;
+    Mikey = Miguelito;
+    if (Mikey == Miguelito)
+        cout << "Mikey, Miguelito, same difference." << endl;
+    cout << Mikey;
+}

@@ -1,0 +1,15 @@
+How to play a sound in C/C++ on Windows:
+
+Include "-lwinmm" to your "linker" (not compiler).
+In CodeBlocks this is under Project > Build Options
+
+And here's a super-simple example (actually compiled with the above setting added and it worked):
+----------------------------------------------------------------------------------
+#include <windows.h>
+
+int main()
+{
+    PlaySound(TEXT("some_sound.wav"), NULL, SND_FILENAME);
+    return 0;
+}
+----------------------------------------------------------------------------------
